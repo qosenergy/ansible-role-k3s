@@ -48,42 +48,43 @@ my spare time so I cannot promise a speedy fix delivery.
 Below are variables that are set against all of the play hosts for environment
 consistency.
 
-| Variable                         | Description                                                              | Default Value                           |
-|----------------------------------|--------------------------------------------------------------------------|-----------------------------------------|
-| `k3s_cluster_state`              | State of cluster: installed, started, stopped, restarted, downloaded.    | installed                               |
-| `k3s_release_version`            | Use a specific version of k3s, eg. `v0.2.0`. Specify `false` for latest. | `false`                                 |
-| `k3s_github_url`                 | Set the GitHub URL to install k3s from.                                  | https://github.com/rancher/k3s          |
-| `k3s_install_dir`                | Installation directory for k3s.                                          | `/usr/local/bin`                        |
-| `k3s_server_manifests_dir`       | Path for place the `k3s_server_manifests_templates`.                     | `/var/lib/rancher/k3s/server/manifests` |
-| `k3s_server_manifests_templates` | A list of Auto-Deploying Manifests Templates.                            | []                                      |
-| `k3s_use_experimental`           | Allow the use of experimental features in k3s.                           | `false`                                 |
-| `k3s_non_root`                   | Install k3s as non-root user. See notes below.                           | `false`                                 |
-| `k3s_control_workers`            | Are control hosts also workers?                                          | `true`                                  |
-| `k3s_cluster_cidr`               | Network CIDR to use for pod IPs                                          | 10.42.0.0/16                            |
-| `k3s_service_cidr`               | Network CIDR to use for service IPs                                      | 10.43.0.0/16                            |
-| `k3s_control_node_address`       | Use a specific control node address. IP or FQDN.                         | _NULL_                                  |
-| `k3s_control_token`              | Use a specific control token, please read notes below.                   | _NULL_                                  |
-| `k3s_https_port`                 | HTTPS port listening port.                                               | 6443                                    |
-| `k3s_use_docker`                 | Use Docker rather than Containerd?                                       | `false`                                 |
-| `k3s_no_flannel`                 | Do not use Flannel                                                       | `false`                                 |
-| `k3s_flannel_backend`            | Flannel backend ('none', 'vxlan', 'ipsec', or 'wireguard')               | vxlan                                   |
-| `k3s_no_coredns`                 | Do not use CoreDNS                                                       | `false`                                 |
-| `k3s_cluster_dns`                | Cluster IP for CoreDNS service. Should be in your service-cidr range.    | _NULL_                                  |
-| `k3s_cluster_domain`             | Cluster Domain.                                                          | cluster.local                           |
-| `k3s_resolv_conf`                | Kubelet resolv.conf file                                                 | _NULL_                                  |
-| `k3s_no_traefik`                 | Do not use Traefik                                                       | `false`                                 |
-| `k3s_no_servicelb`               | Do not use ServiceLB, necessary for using something like MetalLB.        | `false`                                 |
-| `k3s_no_local_storage`           | Do not use Local Storage                                                 | `false`                                 |
-| `k3s_no_metrics_server`          | Do not deploy metrics server                                             | `false`                                 |
-| `k3s_disable_scheduler`          | Disable Kubernetes default scheduler                                     | `false`                                 |
-| `k3s_disable_cloud_controller`   | Disable k3s default cloud controller manager.                            | `false`                                 |
-| `k3s_disable_network_policy`     | Disable k3s default network policy controller.                           | `false`                                 |
-| `k3s_write_kubeconfig_mode`      | Define the file mode from the generated KubeConfig, eg. `644`            | _NULL_                                  |
-| `k3s_datastore_endpoint`         | Define the database or etcd cluster endpoint for HA.                     | _NULL_                                  |
-| `k3s_datastore_cafile`           | Define the database TLS CA file.                                         | _NULL_                                  |
-| `k3s_datastore_certfile`         | Define the database TLS Cert file.                                       | _NULL_                                  |
-| `k3s_datastore_keyfile`          | Define the database TLS Key file.                                        | _NULL_                                  |
-| `k3s_dqlite_datastore`           | Use DQLite as the database backend for HA. (EXPERIMENTAL)                | `false`                                 |
+| Variable                         | Description                                                                         | Default Value                           |
+|----------------------------------|-------------------------------------------------------------------------------------|-----------------------------------------|
+| `k3s_cluster_state`              | State of cluster: installed, started, stopped, restarted, downloaded, uninstalled.  | installed                               |
+| `k3s_release_version`            | Use a specific version of k3s, eg. `v0.2.0`. Specify `false` for latest.            | `false`                                 |
+| `k3s_github_url`                 | Set the GitHub URL to install k3s from.                                             | https://github.com/rancher/k3s          |
+| `k3s_install_dir`                | Installation directory for k3s.                                                     | `/usr/local/bin`                        |
+| `k3s_server_manifests_dir`       | Path for place the `k3s_server_manifests_templates`.                                | `/var/lib/rancher/k3s/server/manifests` |
+| `k3s_server_manifests_templates` | A list of Auto-Deploying Manifests Templates.                                       | []                                      |
+| `k3s_use_experimental`           | Allow the use of experimental features in k3s.                                      | `false`                                 |
+| `k3s_non_root`                   | Install k3s as non-root user. See notes below.                                      | `false`                                 |
+| `k3s_control_workers`            | Are control hosts also workers?                                                     | `true`                                  |
+| `k3s_cluster_cidr`               | Network CIDR to use for pod IPs                                                     | 10.42.0.0/16                            |
+| `k3s_service_cidr`               | Network CIDR to use for service IPs                                                 | 10.43.0.0/16                            |
+| `k3s_control_node_address`       | Use a specific control node address. IP or FQDN.                                    | _NULL_                                  |
+| `k3s_control_token`              | Use a specific control token, please read notes below.                              | _NULL_                                  |
+| `k3s_https_port`                 | HTTPS port listening port.                                                          | 6443                                    |
+| `k3s_use_docker`                 | Use Docker rather than Containerd?                                                  | `false`                                 |
+| `k3s_no_flannel`                 | Do not use Flannel                                                                  | `false`                                 |
+| `k3s_flannel_backend`            | Flannel backend ('none', 'vxlan', 'ipsec', 'host-gw' or 'wireguard')                | vxlan                                   |
+| `k3s_no_coredns`                 | Do not use CoreDNS                                                                  | `false`                                 |
+| `k3s_cluster_dns`                | Cluster IP for CoreDNS service. Should be in your service-cidr range.               | _NULL_                                  |
+| `k3s_cluster_domain`             | Cluster Domain.                                                                     | cluster.local                           |
+| `k3s_resolv_conf`                | Kubelet resolv.conf file                                                            | _NULL_                                  |
+| `k3s_no_traefik`                 | Do not use Traefik                                                                  | `false`                                 |
+| `k3s_no_servicelb`               | Do not use ServiceLB, necessary for using something like MetalLB.                   | `false`                                 |
+| `k3s_no_local_storage`           | Do not use Local Storage                                                            | `false`                                 |
+| `k3s_default_local_storage_path` | Set Local Storage Path. Specify `false` for default.                                | `false`                                 |
+| `k3s_no_metrics_server`          | Do not deploy metrics server                                                        | `false`                                 |
+| `k3s_disable_scheduler`          | Disable Kubernetes default scheduler                                                | `false`                                 |
+| `k3s_disable_cloud_controller`   | Disable k3s default cloud controller manager.                                       | `false`                                 |
+| `k3s_disable_network_policy`     | Disable k3s default network policy controller.                                      | `false`                                 |
+| `k3s_write_kubeconfig_mode`      | Define the file mode from the generated KubeConfig, eg. `644`                       | _NULL_                                  |
+| `k3s_datastore_endpoint`         | Define the database or etcd cluster endpoint for HA.                                | _NULL_                                  |
+| `k3s_datastore_cafile`           | Define the database TLS CA file.                                                    | _NULL_                                  |
+| `k3s_datastore_certfile`         | Define the database TLS Cert file.                                                  | _NULL_                                  |
+| `k3s_datastore_keyfile`          | Define the database TLS Key file.                                                   | _NULL_                                  |
+| `k3s_dqlite_datastore`           | Use DQLite as the database backend for HA. (EXPERIMENTAL)                           | `false`                                 |
 
 #### Important note about `k3s_release_version`
 
@@ -129,6 +130,7 @@ Below are variables that are set against specific hosts in your inventory.
 | `k3s_node_ip_address`            | IP Address to advertise for this node.                                   | _NULL_                 |
 | `k3s_node_external_address`      | External IP Address to advertise for this node.                          | _NULL_                 |
 | `k3s_node_labels`                | List of node labels.                                                     | _NULL_                 |
+| `k3s_kubelet_args`               | A list of kubelet args to pass to the server.                            | []                     |
 | `k3s_node_taints`                | List of node taints.                                                     | _NULL_                 |
 | `k3s_node_data_dir`              | Folder to hold state.                                                    | `/var/lib/rancher/k3s` |
 | `k3s_tls_san`                    | Add additional hosname or IP as Subject Alternate Name in the TLS cert.  | _NULL_                 |
@@ -158,6 +160,23 @@ feature you will also need to set `k3s_use_experimental` to true.
 If you are running k3s on systems with multiple network interfaces, it is
 necessary to have the flannel interface on a network interface that is routable
 to the master node(s).
+
+#### Notes about `k3s_kubelet_args`
+
+This parameter allows for assigning additional kubelet args to the server during
+runtime. For instance, to use the Azure Cloud Controller, assign the following to
+the master node's configuration in your host file.
+
+Note, when using an external cloud controller as below, ensure that the native k3s
+cloud controller is disabled by setting the `k3s_disable_cloud_controller` to `true`.
+
+**YAML**:
+
+```yaml
+k3s_kubelet_args:
+  - cloud-provider: external
+  - provider-id: azure
+```
 
 #### Notes about `k3s_node_labels` and `k3s_node_taints`
 
@@ -218,7 +237,7 @@ Example playbook, Highly Available running the latest release:
 
 ## License
 
-BSD
+[BSD 3-clause](LICENSE.txt)
 
 ## Author Information
 

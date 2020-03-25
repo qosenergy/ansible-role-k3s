@@ -118,6 +118,14 @@
     fail_msg: "Node Taints are not supported in {{ k3s_release_version }}"
   when: k3s_node_taints is defined and k3s_node_taints
 
+- name: Check k3s_kubelet_args against k3s version
+  assert:
+    that:
+      - (k3s_release_version | replace('v', '')) is version_compare('0.4.0', '>=')
+    success_msg: "Kubelet args supported in {{ k3s_release_version }}"
+    fail_msg: "Kubelet args are not supported in {{ k3s_release_version }}"
+  when: k3s_kubelet_args is defined and k3s_kubelet_args | length > 0
+
 - name: Check k3s_flannel_backend against k3s version
   assert:
     that:
@@ -125,6 +133,14 @@
     success_msg: "Alternate flannel backends supported in {{ k3s_release_version }}"
     fail_msg: "Alternate flannel backends are not supported in {{ k3s_release_version }}"
   when: k3s_flannel_backend is defined and k3s_flannel_backend
+
+- name: Check k3s_flannel_backend 'host-gw' configuration against k3s version
+  assert:
+    that:
+      - (k3s_release_version | replace('v', '')) is version_compare('1.17.2', '>=')
+    success_msg: "host-gw flannel backend supported in {{ k3s_release_version }}"
+    fail_msg: "host-gw flannel backend is not supported in {{ k3s_release_version }}"
+  when: k3s_flannel_backend is defined and k3s_flannel_backend == 'host-gw'
 
 - name: Check k3s_disable_network_policy against k3s version
   assert:
@@ -189,3 +205,11 @@
     success_msg: "--datastore-endpoint supported in {{ k3s_release_version }}"
     fail_msg: "--datastore-endpoint not supported in {{ k3s_release_version }}"
   when: k3s_datastore_keyfile is defined and k3s_datastore_keyfile
+
+- name: Check k3s_default_local_storage_path against k3s version
+  assert:
+    that:
+      - (k3s_release_version | replace('v', '')) is version_compare('1.0.0', '>=')
+    success_msg: "Local storage path supported in {{ k3s_release_version }}"
+    fail_msg: "Local storage path are not supported in {{ k3s_release_version }}"
+  when: k3s_default_local_storage_path is defined and k3s_default_local_storage_path

@@ -28,10 +28,10 @@ ExecStart={{ k3s_install_dir }}/k3s
         --disable-network-policy
     {% endif %}
     {% if k3s_no_flannel %}
-        {% if k3s_release_version is version_compare('1.0.0', '<')  %}
-            --no-flannel
-        {% else %}
+        {% if (k3s_release_version | replace('v', '')) is version_compare('1.0.0', '>=')  %}
             --flannel-backend none
+        {% else %}
+            --no-flannel
         {% endif %}
     {% endif %}
     {% if k3s_cluster_cidr is defined %}
@@ -47,6 +47,9 @@ ExecStart={{ k3s_install_dir }}/k3s
     {% if k3s_no_coredns or k3s_no_traefik or k3s_no_servicelb %}
         {{ ' --no-deploy coredns' if k3s_no_coredns else '' }}{{ ' --no-deploy servicelb' if k3s_no_servicelb else '' }}{{ ' --no-deploy traefik' if k3s_no_traefik else '' }}{{ ' --no-deploy local-storage' if k3s_no_local_storage else '' }}{{ ' --no-deploy metrics-server' if k3s_no_metrics_server else '' }}
     {% endif %}
+    {% endif %}
+    {% if not k3s_no_local_storage and k3s_default_local_storage_path is defined and k3s_default_local_storage_path %}
+        --default-local-storage-path {{ k3s_default_local_storage_path }}
     {% endif %}
     {% if k3s_cluster_dns is defined and k3s_cluster_dns %}
         --cluster-dns {{ k3s_cluster_dns }}
@@ -123,6 +126,13 @@ ExecStart={{ k3s_install_dir }}/k3s
     {% for taint in k3s_node_taints %}
         {% for key, value in taint.items() %}
             --node-taint {{ key }}={{ value }}
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+{% if k3s_kubelet_args is defined and k3s_kubelet_args is iterable %}
+    {% for arg in k3s_kubelet_args %}
+        {% for key, value in arg.items() %}
+            --kubelet-arg {{ key }}={{ value }}
         {% endfor %}
     {% endfor %}
 {% endif %}
