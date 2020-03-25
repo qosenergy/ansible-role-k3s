@@ -1,3 +1,8 @@
+NOTE: this is a fork of <https://github.com/PyratLabs/ansible-role-k3s>. Few
+changes has been added:
+- `master` just follow the upstream
+- all validated modification are merge in `master-qosenergy`
+
 # Ansible Role: k3s
 
 Ansible role for installing [Racher Labs k3s](https://k3s.io/) ("Lightweight
