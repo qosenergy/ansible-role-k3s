@@ -30,6 +30,7 @@
         and (k3s_non_root is not defined or not k3s_non_root)
 
 - import_tasks: build/download-k3s.yml
+  when: not ansible_check_mode
 
 - import_tasks: build/preconfigure-k3s-auto-deploying-manifests.yml
   when: k3s_control_node

@@ -13,11 +13,13 @@
       P_{{ hostvars[item].k3s_primary_control_node | default(False) }}
     create: true
   loop: "{{ play_hosts }}"
+  check_mode: false
 
 - name: Lookup control node from file
   command: "grep '{{ 'P_True' if (k3s_controller_count | length > 1) else 'C_True' }}' /tmp/inventory.txt"
   changed_when: false
   register: k3s_control_delegate_raw
+  check_mode: false
 
 - name: Ensure control node is delegated to for obtaining a token
   set_fact:
@@ -78,4 +80,4 @@
          and kubectl_get_nodes_result.stdout.find("NotReady") == -1
   retries: 30
   delay: 20
-  when: k3s_control_node and not k3s_no_flannel
+  when: k3s_control_node and not k3s_no_flannel and not ansible_check_mode
