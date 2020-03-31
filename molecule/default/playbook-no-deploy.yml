@@ -23,5 +23,6 @@
     k3s_kubelet_args:
       - cloud-provider: external
       - provider-id: azure
+    k3s_kube_apiserver_args: [] # don't know what we can add here
   roles:
     - role: xanmanning.k3s

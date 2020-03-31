@@ -77,6 +77,13 @@ ExecStart={{ k3s_install_dir }}/k3s
             --token {{ k3s_control_token }}
         {% endif %}
     {% endif %}
+  {% if k3s_kube_apiserver_args is defined and k3s_kube_apiserver_args is iterable %}
+      {% for arg in k3s_kube_apiserver_args %}
+          {% for key, value in arg.items() %}
+              --kube-apiserver-arg {{ key }}={{ value }}
+          {% endfor %}
+      {% endfor %}
+  {% endif %}
 {% else %}
     agent
     --server https://{{ k3s_control_node_address }}:{{ k3s_https_port }}

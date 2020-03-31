@@ -126,6 +126,14 @@
     fail_msg: "Kubelet args are not supported in {{ k3s_release_version }}"
   when: k3s_kubelet_args is defined and k3s_kubelet_args | length > 0
 
+- name: Check k3s_kube_apiserver_args against k3s version
+  assert:
+    that:
+      - (k3s_release_version | replace('v', '')) is version_compare('0.4.0', '>=')
+    success_msg: "apiserver args supported in {{ k3s_release_version }}"
+    fail_msg: "apiserver args are not supported in {{ k3s_release_version }}"
+  when: k3s_kube_apiserver_args is defined and k3s_kube_apiserver_args | length > 0
+
 - name: Check k3s_flannel_backend against k3s version
   assert:
     that:
