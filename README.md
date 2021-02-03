@@ -3,6 +3,8 @@ changes has been added:
 - `master` just follow the upstream
 - all validated modification are merge in `master-qosenergy`
 
+See <https://github.com/qosenergy/ansible-role-k3s> for forked project.
+
 # Ansible Role: k3s (v2.x)
 
 Ansible role for installing [K3S](https://k3s.io/) ("Lightweight
